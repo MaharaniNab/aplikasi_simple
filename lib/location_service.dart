@@ -5,24 +5,28 @@ class LocationService {
     bool serviceEnabled;
     LocationPermission permission;
 
+    // Memeriksa apakah layanan lokasi diaktifkan
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return 'Location services are disabled.';
+      return 'Layanan lokasi dinonaktifkan.';
     }
 
+    // Memeriksa status izin lokasi
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return 'Location permissions are denied';
+        return 'Izin lokasi ditolak';
       }
     }
 
+    // Memeriksa jika izin lokasi ditolak secara permanen
     if (permission == LocationPermission.deniedForever) {
-      return 'Location permissions are permanently denied, we cannot request permissions.';
+      return 'Izin lokasi ditolak secara permanen, kami tidak dapat meminta izin.';
     }
 
+    // Mendapatkan lokasi saat ini
     final position = await Geolocator.getCurrentPosition();
-    return 'Lat: ${position.latitude}, Long: ${position.longitude}';
+    return 'Lintang: ${position.latitude}, Bujur: ${position.longitude}';
   }
 }
