@@ -33,15 +33,15 @@ class _HomePageState extends State<HomePage> {
         });
       } else {
         setState(() {
-          _latitude = 'Failed to get latitude';
-          _longitude = 'Failed to get longitude';
+          _latitude = 'Gagal mendapatkan lintang';
+          _longitude = 'Gagal mendapatkan bujur';
           _locationObtained = false;
         });
       }
     } catch (e) {
       setState(() {
-        _latitude = 'Error';
-        _longitude = 'Error';
+        _latitude = 'Kesalahan';
+        _longitude = 'Kesalahan';
         _locationObtained = false;
       });
     }
@@ -50,17 +50,17 @@ class _HomePageState extends State<HomePage> {
   void _openMaps() async {
     if (_latitude.isNotEmpty && _longitude.isNotEmpty) {
       final url =
-          'https://www.google.com/maps/@$_latitude,$_longitude,15z'; // Updated URL format
+          'https://www.google.com/maps/@$_latitude,$_longitude,15z'; // Format URL yang diperbarui
       if (await canLaunch(url)) {
         await launch(url);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not open Google Maps')),
+          const SnackBar(content: Text('Tidak dapat membuka Google Maps')),
         );
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Location data is not available')),
+        const SnackBar(content: Text('Data lokasi tidak tersedia')),
       );
     }
   }
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Home'),
+        title: const Text('Beranda'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
@@ -93,11 +93,11 @@ class _HomePageState extends State<HomePage> {
                 fit: BoxFit.cover,
               ),
             ),
-            DView.textTitle('Your Location', color: Colors.black),
+            DView.textTitle('Lokasi Anda', color: Colors.black),
             DView.height(),
             if (!_locationObtained)
               const Text(
-                'Getting location...',
+                'Mendapatkan lokasi...',
                 style: TextStyle(fontSize: 16, color: Colors.grey),
                 textAlign: TextAlign.center,
               )
@@ -105,13 +105,13 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: [
                   Text(
-                    'Latitude: $_latitude',
+                    'Lintang: $_latitude',
                     style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                     textAlign: TextAlign.center,
                   ),
                   DView.height(),
                   Text(
-                    'Longitude: $_longitude',
+                    'Bujur: $_longitude',
                     style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                     textAlign: TextAlign.center,
                   ),
@@ -122,7 +122,7 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _openMaps,
-                child: const Text('Open in Google Maps'),
+                child: const Text('Buka di Google Maps'),
               ),
             ),
           ],
